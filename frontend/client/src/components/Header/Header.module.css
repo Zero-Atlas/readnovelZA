@@ -1,0 +1,15 @@
+.wp {
+  justify-content: space-between;
+}
+.wp div,.wp nav{
+  padding: 0.8rem;
+}
+
+.nav{
+  align-items: center;
+  gap: 1.6rem;
+}
+.nav button{
+  background-color: inherit;
+  border: none;
+}
