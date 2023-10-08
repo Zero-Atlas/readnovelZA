@@ -1,15 +1,43 @@
 .wp {
   justify-content: space-between;
 }
-.wp div,.wp nav{
+.wp div,
+.wp nav {
   padding: 0.8rem;
 }
 
-.nav{
+.logo {
+  color: #3a4687;
+  font-size: 4rem;
+  font-weight: 600;
+  vertical-align: middle;
+  text-decoration: none;
+  display: inline-block;
+  padding: 1rem;
+}
+
+.search input {
+  font-size: 1.6rem;
+  background-color: #242337;
+  color: #eee;
+  outline: none;
+  border: none;
+  padding: 0.4rem;
+  border-radius: 4px;
+}
+
+.nav {
   align-items: center;
   gap: 1.6rem;
 }
-.nav button{
+.navLink {
   background-color: inherit;
-  border: none;
+  color: #208cdb;
+  font-size: 1.8rem;
+  padding: 0.4rem;
+  border-radius: 4px;
+  text-decoration: none;
+}
+.active {
+  border: 1px solid #208cdb;
 }

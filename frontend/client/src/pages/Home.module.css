@@ -1,0 +1,8 @@
+.wrapper{
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 120rem;
+  box-shadow: 2px 2px 5px 2px #ccc;
+}
