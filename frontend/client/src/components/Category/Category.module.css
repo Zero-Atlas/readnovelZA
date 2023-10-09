@@ -1,0 +1,24 @@
+.wp{
+  width: 100%;
+  padding: 1rem;
+}
+
+.title{
+  background-color: #fff;
+  border: none;
+  color: #60678A;
+  font-weight: 600;
+  font-size: 1.8rem;
+  padding: 1.2rem;
+  width: 100%;
+  border-bottom: 4px solid #BFC3D4;
+  text-align: left;
+}
+
+.novelList{
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
