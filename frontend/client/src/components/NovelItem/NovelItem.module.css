@@ -1,3 +1,46 @@
 .listItem{
   width: 18%;
+  display: flex;
+  flex-direction: column;
+}
+
+.image img{
+  width: 100%;
+}
+.image{
+  display: inline-block;
+  overflow: hidden;
+  height: 22rem;
+}
+
+.title{
+  color: #777;
+  text-decoration: none;
+}
+.title:hover{
+  color: #FC6B9E;
+}
+
+.chapter{
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+.chapter a,.chapter p{
+  border: 1px solid #FC6B9E;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.chapter a:link,.chapter a:visited{
+  color: #FC6B9E;
+  background-color: #fff;
+}
+
+.chapter a:hover,.chapter a:active,.chapter p{
+  color: #fff;
+  background-color: #FC6B9E;
 }

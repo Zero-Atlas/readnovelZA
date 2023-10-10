@@ -11,7 +11,7 @@
   font-size: 1.8rem;
   padding: 1.2rem;
   width: 100%;
-  border-bottom: 4px solid #BFC3D4;
+  border-bottom: 3px solid #BFC3D4;
   text-align: left;
 }
 
@@ -19,6 +19,7 @@
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
+  column-gap: 2rem;
   margin-bottom: 3rem;
+  row-gap: 4rem;
 }
