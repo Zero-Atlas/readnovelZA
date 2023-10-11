@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import Header from "../components/Header/Header";
 import classes from "./RootLayout.module.css";
+import Footer from "../components/Footer/Footer";
 
 export default function RootLayout() {
   return (
@@ -11,7 +12,9 @@ export default function RootLayout() {
       <div className={classes.body}>
         <Outlet />
       </div>
-      <div className={classes.footer}></div>
+      <div className={classes.footer}>
+        <Footer />
+      </div>
     </div>
   );
 }

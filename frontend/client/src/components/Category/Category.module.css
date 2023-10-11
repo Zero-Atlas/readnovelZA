@@ -1,6 +1,8 @@
 .wp{
   width: 100%;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .title{
@@ -22,4 +24,20 @@
   column-gap: 2rem;
   margin-bottom: 3rem;
   row-gap: 4rem;
+}
+
+.more{
+  display: inline-block;
+  align-self: flex-end;
+  margin-right: 2rem;
+  margin-left: auto;
+  text-decoration: none;
+  font-weight: 600;
+}
+.more::after{
+  content: ' >';
+}
+
+.more:hover,.more:active{
+  color: #FC6B9E;
 }

@@ -38,6 +38,6 @@
   border-radius: 4px;
   text-decoration: none;
 }
-.active {
+.active,.navLink:hover,.navLink:active {
   border: 1px solid #208cdb;
 }
