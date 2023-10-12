@@ -25,8 +25,10 @@
   display: flex;
   gap: 0.4rem;
   align-items: center;
+  margin-top: 1.6rem;
 }
 .chapter a,.chapter p{
+  margin: 0;
   border: 1px solid #FC6B9E;
   padding: 0.4rem;
   font-size: 1.2rem;

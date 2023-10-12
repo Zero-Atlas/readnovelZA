@@ -1,11 +1,14 @@
 .wrapper{
   display: flex;
-  gap: 2rem;
+  gap: 4rem;
   justify-content: space-between;
   margin: 0 auto;
   max-width: 120rem;
   box-shadow: 2px 2px 5px 2px #ccc;
 }
 .content{
-  flex-basis: 70%;
+  flex-basis: 75%;
+}
+.sidebar{
+  flex-grow: 1;
 }

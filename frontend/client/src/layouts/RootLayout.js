@@ -9,9 +9,9 @@ export default function RootLayout() {
       <div className={classes.header}>
         <Header />
       </div>
-      <div className={classes.body}>
+      <main className={classes.body}>
         <Outlet />
-      </div>
+      </main>
       <div className={classes.footer}>
         <Footer />
       </div>
