@@ -1,4 +1,4 @@
-import Category from "../components/Category/Category";
+import Category from "../../components/Category/Category";
 import classes from "./Home.module.css";
 import Sidebar from "./Sidebar/Sidebar";
 

@@ -1,5 +1,7 @@
 .wp {
   justify-content: space-between;
+  margin: 0 auto;
+  max-width: 120rem;
 }
 .wp div,
 .wp nav {

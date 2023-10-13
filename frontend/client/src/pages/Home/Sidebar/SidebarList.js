@@ -1,5 +1,5 @@
 import classes from "./Sidebar.module.css";
-import cover from "../../static/cover.jpg";
+import cover from "../../../static/cover.jpg";
 import { Link } from "react-router-dom";
 
 export default function SidebarList() {

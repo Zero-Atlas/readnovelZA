@@ -1,0 +1,108 @@
+.wp{
+  margin: 0 auto;
+  transform: translateY(-1rem);
+  max-width: 120rem;
+}
+.path{
+  border-bottom: 3px solid #D4CDCD;
+  padding: 1rem 2rem;
+}
+.path a{
+  color: #8C8383;
+  text-decoration: none;
+}
+.path a:hover,.path a:active,.path a:last-child{
+  color: #FA96C9;
+}
+
+.detail{
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+  position: relative;
+}
+.detail p,.detail h1{margin: 0;}
+.image{
+  height: 40rem;
+}
+.image img{height: 100%;}
+
+.text h1{
+  color: #7343C8;
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.text p{
+  color: #8C8383;
+  font-weight: 500;
+}
+.text p span{
+  color: #398B6D;
+  font-weight: 400;
+  font-size: 1.7rem;
+}
+p.total span{
+  font-weight: 600;
+  color: #48A9B9;
+}
+p.rating span{
+  color: rgb(210, 114, 11);
+}
+
+.genreList{
+  margin: 0.6rem 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+.genreList a{
+  color: #4996F3;
+  background-color: #fff;
+  border: 1px solid #4996F3;
+  border-radius: 4px;
+  text-decoration: none;
+  padding: 0.4rem;
+  display: inline-block;
+}
+.genreList a:hover,.genreList a:active{
+  background-color: #BDDAE6;
+}
+
+.action{
+  position: absolute;
+  bottom: 1rem;
+}
+.action button,.action a {
+  font-size: 1.8rem;
+  border: none;
+  display: inline-block;
+  padding: 0.4rem 1.2rem;
+  color: #fff;
+  text-decoration: none;
+  margin-right: 1rem;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px 2px rgb(0, 0, 0, 0.12);
+}
+
+.follow button{
+  background-color: #03a9f4;
+  margin-bottom: 2rem;
+}
+.follow button:hover,.follow button:active{
+  background-color: #3db2e7;
+}
+
+.continue{
+  background-color: #3f51b5;
+}
+.continue:hover,.continue:active{
+  background-color: #3f51b5e3;
+}
+.start{
+  background-color: #f50057;
+}
+.start:hover,.start:active{
+  background-color: #c51162;
+}
