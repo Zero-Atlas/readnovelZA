@@ -2,3 +2,25 @@
   margin: 0 auto;
   max-width: 120rem;
 }
+.wp ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.title{
+  color: #FA96C9;
+  box-shadow: 0px 2px 4px 2px rgb(0, 0, 0,0.12);
+  margin-bottom: 0.4rem;
+  padding: 1rem;
+}
+.grid{
+  box-shadow: 0px 2px 4px 2px rgb(0, 0, 0,0.12);
+  padding: 0.8rem 1.6rem;
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+}
+.genre{
+  grid-row: 1/4;
+  grid-column: 2/3;
+  align-self: center;
+}
