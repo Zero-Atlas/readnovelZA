@@ -6,11 +6,15 @@
 
 .image img{
   width: 100%;
+  transition: all 0.3s;
 }
 .image{
   display: inline-block;
   overflow: hidden;
   height: 22rem;
+}
+.image:hover img{
+  transform: scale(1.2);
 }
 
 .title{

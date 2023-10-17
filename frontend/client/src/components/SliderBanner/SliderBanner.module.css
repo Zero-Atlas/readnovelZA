@@ -1,0 +1,47 @@
+.wp{
+  position: relative;
+  height: 100%;
+  transform: translateY(-1rem);
+  background: transparent;
+  overflow: hidden;
+}
+
+.slideShow{
+  overflow: hidden;
+  height: 100%;
+  background: transparent;
+  position: relative;
+  
+}
+.image{
+  overflow: hidden;
+  display: block;
+  z-index: 0;
+  transition: all 0.2s;
+}
+.slider {
+  /* overflow: hidden; */
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 0.4rem;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  position: absolute;
+  background: transparent;
+}
+.slider li {
+  border-radius: 50%;
+  width: 1.6rem;
+  height: 1.6rem;
+  background-color: rgb(100, 100, 100);
+  z-index: 2;
+  position: relative;
+  top: -30px;
+}
+.slider li.active {
+  background-color: rgb(200, 200, 200);
+}

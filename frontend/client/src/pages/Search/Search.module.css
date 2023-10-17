@@ -1,26 +1,142 @@
-.wp{
+.wp {
   margin: 0 auto;
   max-width: 120rem;
 }
-.wp ul{
+.wp * {
+  transition: all 0.2s;
+}
+.wp ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-.title{
-  color: #FA96C9;
-  box-shadow: 0px 2px 4px 2px rgb(0, 0, 0,0.12);
+.wp button {
+  padding: 0.6rem 0;
+  width: 10rem;
+  border-radius: 4px;
+  font-size: 1.6rem;
+}
+.wp button:hover {
+  cursor: pointer;
+}
+.wp button:hover:disabled {
+  cursor: not-allowed;
+}
+
+.title {
+  color: #fa96c9;
+  box-shadow: 0px 2px 4px 2px rgb(0, 0, 0, 0.12);
   margin-bottom: 0.4rem;
   padding: 1rem;
 }
-.grid{
-  box-shadow: 0px 2px 4px 2px rgb(0, 0, 0,0.12);
+.grid {
+  box-shadow: 0px 2px 4px 2px rgb(0, 0, 0, 0.12);
   padding: 0.8rem 1.6rem;
+  column-gap: 2rem;
   display: grid;
   grid-template-columns: 5fr 1fr;
 }
-.genre{
+.genre {
   grid-row: 1/4;
   grid-column: 2/3;
   align-self: center;
+}
+
+.result {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+}
+.result li {
+  margin-top: 1rem;
+  box-shadow: 0px 2px rgb(0, 0, 0, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  width: 17rem;
+}
+.image img{
+  width: 100%;
+  height: 26rem;
+  overflow: hidden;
+}
+.result li:hover,
+.result li:active {
+  box-shadow: 0px 2px 5px 4px rgba(0, 0, 0, 0.3);
+}
+.result a:link,
+.result a:visited {
+  color: #8f8a91;
+  text-decoration: none;
+  display: inline-block;
+}
+.result p {
+  padding: 0.4rem;
+  margin: 0;
+}
+
+.sort {
+  display: flex;
+  gap: 0.8rem;
+}
+.sort button {
+  border: 1px solid #6797bd;
+  color: #585151;
+}
+.sort button:hover,
+.sort button:active {
+  color: #fff;
+  background-color: royalblue;
+}
+
+.page {
+  display: flex;
+  gap: 1.4rem;
+  margin-top: 1rem;
+  margin-bottom: 0.8rem;
+}
+.page button {
+  box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.3);
+  border: none;
+}
+.page button:hover,
+.page button:active {
+  color: #00e;
+  background-color: #03a9f429;
+}
+.page button:disabled {
+  background-color: #9aa0a0;
+  color: #7c737a;
+}
+
+.genre fieldset {
+  border: 3px solid #8080807d;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.genre legend {
+  color: #2196f3;
+  font-weight: 700;
+}
+.category {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  color: #2196f3;
+  font-weight: 600;
+  row-gap: 1rem;
+}
+.category li {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 1rem;
+}
+.category li:nth-child(even) {
+  justify-self: end;
+}
+.category li:nth-child(odd) {
+  justify-self: start;
+}
+.category li:hover,
+.category li:active,
+.category li.active {
+  color: #fff;
+  background-color: rgb(33, 150, 243,0.8);
 }

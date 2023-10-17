@@ -1,4 +1,7 @@
-.wrapper{
+.banner{
+  height: 48rem;
+}
+.flex{
   display: flex;
   gap: 4rem;
   justify-content: space-between;

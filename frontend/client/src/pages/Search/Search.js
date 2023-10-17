@@ -13,7 +13,9 @@ export default function Search() {
           <button className={classes.view}>View</button>
         </div>
         <div className={classes.page}>
-          <button className={classes.prev}>Previous</button>
+          <button className={classes.prev} disabled={true}>
+            Previous
+          </button>
           <button className={classes.next}>Next</button>
         </div>
         {/* ----------------------Search result------------------------ */}
@@ -68,7 +70,9 @@ export default function Search() {
           </li>
         </ul>
         <div className={classes.page}>
-          <button className={classes.prev}>Previous</button>
+          <button className={classes.prev} disabled={true}>
+            Previous
+          </button>
           <button className={classes.next}>Next</button>
         </div>
         {/* -----------------------Genre field------------------------- */}
@@ -76,6 +80,16 @@ export default function Search() {
           <fieldset>
             <legend>Genre</legend>
             <ul className={classes.category}>
+              <li className={classes.active}>Action1</li>
+              <li>Adventure2</li>
+              <li>Comedy3</li>
+              <li>Drama4</li>
+              <li>Romatic</li>
+              <li>Action</li>
+              <li>Adventure</li>
+              <li>Comedy</li>
+              <li>Drama</li>
+              <li>Romatic</li>
               <li>Action</li>
               <li>Adventure</li>
               <li>Comedy</li>
