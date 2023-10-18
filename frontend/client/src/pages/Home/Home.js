@@ -13,7 +13,7 @@ export default function Home() {
         {/* content */}
         <div className={classes.content}>
           <Category title="Recent Updated" />
-          <Category title="Recent Read Related" />
+          <Category title="Most Popular" />
           <Category title="New Novel" />
         </div>
 
