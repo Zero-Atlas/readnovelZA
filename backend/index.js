@@ -11,10 +11,10 @@ const multer = require("multer");
 
 //import route
 const novelRouter = require("./routes/novel");
+const { env } = require("process");
 
 //database init
-const MONGODB_URI =
-  "mongodb+srv://andachuynh:qMExsQpmRvHnR5L4@movie-site.kpkcv1h.mongodb.net/novel";
+const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@movie-site.kpkcv1h.mongodb.net/${process.env.MONGO_DATABASE}`;
 
 //multer init
 const store = new MongoDBStore({
@@ -52,10 +52,7 @@ app.use(bodyParser.json());
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
 );
-app.use(
-  "/public",
-  express.static(path.join(__dirname, "public"))
-);
+app.use("/public", express.static(path.join(__dirname, "public")));
 
 //route
 app.use("/novel", novelRouter);
