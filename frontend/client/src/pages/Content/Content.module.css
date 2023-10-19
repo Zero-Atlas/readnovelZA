@@ -1,0 +1,31 @@
+.wp {
+  margin: 0 auto;
+  transform: translateY(-1rem);
+  max-width: 120rem;
+}
+.path {
+  border-bottom: 3px solid #d4cdcd;
+  padding: 1rem 2rem;
+}
+.path a {
+  color: #8c8383;
+  text-decoration: none;
+}
+.path a:hover,
+.path a:active,
+.path a:last-child {
+  color: #fa96c9;
+}
+
+.content {
+  background-color: #333333;
+  color: #eee;
+  min-height: 60rem;
+}
+.content * {
+  background-color: #333333;
+}
+.content .wp {
+  transform: none;
+  padding: 1rem;
+}
