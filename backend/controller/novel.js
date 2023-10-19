@@ -1,10 +1,11 @@
 const Novel = require("../model/novel");
-const ChapterList = require("../model/chapterList");
+const ChapterContent = require("../model/chapterContent");
 
 exports.getBanner = (req, res, next) => {
-  Novel.find({ banner: (value) => value !== undefined })
+  return Novel.find()
+    .select("banner name")
     .then((novels) => {
-      return res.status(200).json(novels);
+      return res.status(200).json(novels.filter((novel) => novel.banner));
     })
     .catch((err) => {
       console.log(err);
@@ -13,7 +14,8 @@ exports.getBanner = (req, res, next) => {
 };
 
 exports.getRecent = (req, res, next) => {
-  Novel.find().populate('chapters')
+  return Novel.find()
+    .select("image name chapters")
     .then((novels) => {
       novels.sort((a, b) => {
         return new Date(a.updatedAt) - new Date(b.updatedAt);
@@ -27,7 +29,8 @@ exports.getRecent = (req, res, next) => {
 };
 
 exports.getPopular = (req, res, next) => {
-  Novel.find().populate('chapters')
+  return Novel.find()
+    .select("image name chapters")
     .then((novels) => {
       novels.sort((a, b) => {
         return a.rating.score - b.rating.score;
@@ -41,7 +44,8 @@ exports.getPopular = (req, res, next) => {
 };
 
 exports.getNew = (req, res, next) => {
-  Novel.find().populate('chapters')
+  return Novel.find()
+    .select("image name chapters")
     .then((novels) => {
       novels.sort((a, b) => {
         return new Date(a.createdAt) - new Date(b.createdAt);
@@ -54,6 +58,36 @@ exports.getNew = (req, res, next) => {
     });
 };
 
-exports.getDetail=(req,res,next)=>{}
+exports.getDetail = (req, res, next) => {
+  const novelName = req.params.novelName;
+  return Novel.findOne({ name: novelName })
+    .then((novel) => {
+      if (novel) return res.status(200).json(novel);
+      else return res.status(202).json({ message: "Could not found novel" });
+    })
+    .catch((err) => {
+      console.log(err);
+      return next(err);
+    });
+};
 
-exports.getContent=(req,res,next)=>{}
+exports.getContent = (req, res, next) => {
+  const novelName = req.params.novelName;
+  const chapterNo = Number(req.params.chapterNo);
+  return Novel.findOne({ name: novelName })
+    .then((novel) => {
+      if (novel) {
+        const chapter = novel.chapters.find((c) => c.chapter === chapterNo);
+        if (chapter) {
+          return ChapterContent.findById(chapter.content).then((content) =>
+            res.status(200).json(content)
+          );
+        } else
+          return res.status(202).json({ message: "Could not found chapter" });
+      } else return res.status(202).json({ message: "Could not found novel" });
+    })
+    .catch((err) => {
+      console.log(err);
+      return next(err);
+    });
+};

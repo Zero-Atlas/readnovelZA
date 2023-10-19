@@ -10,9 +10,19 @@ const schema = new mongoose.Schema({
   banner: { type: String },
   description: { type: String, require: true },
   category: { type: Array, require: true },
-  chapters: { type: mongoose.Types.ObjectId, ref: "ChapterList" },
   updatedAt: { type: String, require: true },
   createdAt: { type: String, require: true },
+  chapters: [
+    {
+      chapter: { type: Number },
+      title: { type: String },
+      group: { type: String },
+      status: { type: String },
+      viewed: { type: Number },
+      updatedAt: { type: String },
+      content: { type: mongoose.Types.ObjectId, ref: "ChapterContent" },
+    },
+  ],
 });
 
 module.exports = mongoose.model("Novel", schema);

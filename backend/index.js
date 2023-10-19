@@ -60,6 +60,7 @@ app.use("/novel", novelRouter);
 mongoose
   .connect(MONGODB_URI)
   .then(() => {
+    console.log('connected to database')
     const server = app.listen(5000);
   })
   .catch((err) => {
