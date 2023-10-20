@@ -11,7 +11,6 @@ const multer = require("multer");
 
 //import route
 const novelRouter = require("./routes/novel");
-const { env } = require("process");
 
 //database init
 const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@movie-site.kpkcv1h.mongodb.net/${process.env.MONGO_DATABASE}`;

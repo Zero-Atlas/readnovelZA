@@ -1,26 +1,29 @@
 import classes from "./SliderBanner.module.css";
-import banner from "../../static/banner.jpg";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function SliderBanner() {
+export default function SliderBanner(props) {
   const [bannerNo, setBannerNo] = useState(0);
+  console.log(props.data);
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setBannerNo((prev) => {
-        if (prev === 6) return 0;
+        if (prev === props.data.length - 1) return 0;
         else return prev + 1;
       });
     }, 4000);
+    return () => clearTimeout(timer);
   }, [bannerNo]);
+
   return (
     <div className={classes.wp}>
       <div className={classes.slideShow}>
-        <Link to='/novel/novel-name'
+        <Link
+          to={`/novel/${props.data[bannerNo].name}`}
           className={classes.image}
           style={{
             position: "absolute",
-            backgroundImage: `url(${banner})`,
+            backgroundImage: `url(${props.data[bannerNo].banner})`,
             width: "100%",
             height: "100%",
             backgroundSize: "cover",
@@ -28,13 +31,13 @@ export default function SliderBanner() {
         ></Link>
       </div>
       <ul className={classes.slider}>
-        <li className={bannerNo === 0 ? classes.active:undefined}></li>
-        <li className={bannerNo === 1 ? classes.active:undefined}></li>
-        <li className={bannerNo === 2 ? classes.active:undefined}></li>
-        <li className={bannerNo === 3 ? classes.active:undefined}></li>
-        <li className={bannerNo === 4 ? classes.active:undefined}></li>
-        <li className={bannerNo === 5 ? classes.active:undefined}></li>
-        <li className={bannerNo === 6 ? classes.active:undefined}></li>
+        {props.data.map((_, index) => (
+          <li
+            onClick={setBannerNo.bind(null, index)}
+            key={index}
+            className={bannerNo === index ? classes.active : undefined}
+          ></li>
+        ))}
       </ul>
     </div>
   );

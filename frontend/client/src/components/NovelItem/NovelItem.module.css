@@ -32,6 +32,8 @@
   margin-top: 1.6rem;
 }
 .chapter a,.chapter p{
+  min-width: 1.6rem;
+  text-align: center;
   margin: 0;
   border: 1px solid #FC6B9E;
   padding: 0.4rem;

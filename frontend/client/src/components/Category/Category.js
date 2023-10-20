@@ -2,10 +2,10 @@ import { useState } from "react";
 import classes from "./Category.module.css";
 import NovelItem from "../NovelItem/NovelItem";
 import { Link } from "react-router-dom";
+import { nameToUrl } from "../../util/convertString";
 
 export default function Category(props) {
   const [showed, setShowed] = useState(true);
-
   const showCatHandler = () => {
     setShowed((prev) => !prev);
   };
@@ -18,14 +18,13 @@ export default function Category(props) {
       {showed && (
         <>
           <ul className={classes.novelList}>
-            <NovelItem />
-            <NovelItem />
-            <NovelItem />
-            <NovelItem />
-            <NovelItem />
-            <NovelItem />
+            {props.data.map((item, index) => (
+              <NovelItem data={item} key={index} />
+            ))}
           </ul>
-          <Link to='/this-cat' className={classes.more}>See more</Link>
+          <Link to={`/search?sort=${nameToUrl(props.title)}`} className={classes.more}>
+            See more
+          </Link>
         </>
       )}
     </article>

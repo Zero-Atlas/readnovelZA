@@ -12,6 +12,16 @@ exports.getBanner = (req, res, next) => {
       return next(err);
     });
 };
+exports.getAll = (req, res, next) => {
+  return Novel.find()
+    .then((novels) => {
+      return res.status(200).json(novels);
+    })
+    .catch((err) => {
+      console.log(err);
+      return next(err);
+    });
+};
 
 exports.getRecent = (req, res, next) => {
   return Novel.find()

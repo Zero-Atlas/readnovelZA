@@ -7,6 +7,7 @@ Router.get('/banner',novelController.getBanner)
 Router.get('/recent',novelController.getRecent)
 Router.get('/popular',novelController.getPopular)
 Router.get('/new',novelController.getNew)
+Router.get('/all',novelController.getAll)
 
 // router for novel read
 Router.get('/:novelName/:chapterNo',novelController.getContent)

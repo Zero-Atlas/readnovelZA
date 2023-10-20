@@ -1,49 +1,34 @@
 import classes from "./Sidebar.module.css";
-import cover from "../../../static/cover.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function SidebarList() {
+export default function SidebarList(props) {
+  const navigate = useNavigate();
   return (
     <ul className={classes.list}>
-      <li className={classes.listItem}>
-        <Link to='/detail'>
-          <div className={classes.image}>
-            <img src={cover} alt="alter" />
+      {props.data.map((novel, index) => (
+        <li key={index} className={classes.listItem}>
+          <div>
+            <div
+              className={classes.image}
+              onClick={navigate.bind(null, `/novel/${novel.name}`)}
+            >
+              <img src={novel.image} alt="alter" />
+            </div>
+            <div className={classes.detail}>
+              <p onClick={navigate.bind(null, `/novel/${novel.name}`)}>
+                {novel.name}
+              </p>
+              <Link
+                to={`/novel/${novel.name}/${
+                  novel.chapters[novel.chapters.length - 1].chapter
+                }`}
+              >
+                Chapter {novel.chapters[novel.chapters.length - 1].chapter}
+              </Link>
+            </div>
           </div>
-          <div className={classes.detail}>
-            <p>
-              Novel Name
-            </p>
-            <p>Chapter 101</p>
-          </div>
-        </Link>
-      </li>
-      <li className={classes.listItem}>
-        <Link to='/detail'>
-          <div className={classes.image}>
-            <img src={cover} alt="alter" />
-          </div>
-          <div className={classes.detail}>
-            <p>
-              Novel Name
-            </p>
-            <p>Chapter 101</p>
-          </div>
-        </Link>
-      </li>
-      <li className={classes.listItem}>
-        <Link to='/detail'>
-          <div className={classes.image}>
-            <img src={cover} alt="alter" />
-          </div>
-          <div className={classes.detail}>
-            <p>
-              Novel Name
-            </p>
-            <p>Chapter 101</p>
-          </div>
-        </Link>
-      </li>
+        </li>
+      ))}
     </ul>
   );
 }
