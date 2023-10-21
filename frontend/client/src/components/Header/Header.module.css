@@ -40,6 +40,31 @@
   border-radius: 4px;
   text-decoration: none;
 }
-.active,.navLink:hover,.navLink:active {
+.active,
+.navLink:hover,
+.navLink:active {
   border: 1px solid #208cdb;
+}
+
+.profile {
+  width: 3rem;
+  height: 3rem;
+  background-color: #208cdb;
+  color: #0F1128;
+  border-radius: 50%;
+  overflow: hidden;
+  padding: 0 !important;
+  position: relative;
+}
+.profile:hover{
+  cursor: pointer;
+}
+.profile svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  display: inline-block;
+  width: 60%;
+  height: 60%;
 }

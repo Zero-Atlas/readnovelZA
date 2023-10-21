@@ -63,7 +63,7 @@ async function fetchBanner() {
   const respon = await fetch(`${process.env.REACT_APP_API_KEY}/novel/banner`);
   if (!respon.ok) {
     console.log(respon);
-    return null;
+    return [];
   } else {
     return await respon.json();
   }
@@ -72,7 +72,7 @@ async function fetchRecent() {
   const respon = await fetch(`${process.env.REACT_APP_API_KEY}/novel/recent`);
   if (!respon.ok) {
     console.log(respon);
-    return null;
+    return [];
   } else {
     return await respon.json();
   }
@@ -81,7 +81,7 @@ async function fetchPopular() {
   const respon = await fetch(`${process.env.REACT_APP_API_KEY}/novel/popular`);
   if (!respon.ok) {
     console.log(respon);
-    return null;
+    return [];
   } else {
     return await respon.json();
   }
@@ -90,7 +90,7 @@ async function fetchNew() {
   const respon = await fetch(`${process.env.REACT_APP_API_KEY}/novel/new`);
   if (!respon.ok) {
     console.log(respon);
-    return null;
+    return [];
   } else {
     return await respon.json();
   }
@@ -99,7 +99,7 @@ async function fetchSidebar() {
   const respon = await fetch(`${process.env.REACT_APP_API_KEY}/novel/all`);
   if (!respon.ok) {
     console.log(respon);
-    return null;
+    return [];
   } else {
     return await respon.json();
   }

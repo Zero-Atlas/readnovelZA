@@ -4,11 +4,13 @@ import RootLayout from "./layouts/RootLayout";
 import Novel from "./pages/Novel/Novel";
 import Search from "./pages/Search/Search";
 import Content, { loader as contentLoader } from "./pages/Content/Content";
+import ErrorBoundary from "./pages/Error/ErrorBoundary";
 
 const router = createBrowserRouter([
   {
     path: "",
     element: <RootLayout />,
+    errorElement: <ErrorBoundary />,
     children: [
       { index: true, element: <Home />, loader: homeLoader },
       { path: "/novel/:novelName", element: <Novel /> },

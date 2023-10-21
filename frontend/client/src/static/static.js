@@ -1,0 +1,5 @@
+const staticBanner=[]
+const staticRecent=[]
+const staticNew=[]
+const staticPopular=[]
+const staticSidebar=[]

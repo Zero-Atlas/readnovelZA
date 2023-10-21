@@ -12,6 +12,13 @@ const schema = new mongoose.Schema({
   category: { type: Array, require: true },
   updatedAt: { type: String, require: true },
   createdAt: { type: String, require: true },
+  chatRoom: [
+    {
+      user: { type: mongoose.Types.ObjectId },
+      message: { type: String },
+      name: { type: String },
+    },
+  ],
   chapters: [
     {
       chapter: { type: Number },
