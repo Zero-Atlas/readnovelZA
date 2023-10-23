@@ -8,7 +8,7 @@ import LoginModal from "../LoginModal/LoginModal";
 export default function Header() {
   const [showProfile, setShowProfile] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-  const userId = "1";
+  const userId = "";
 
   //login modal control
   const loginClick = () => {
@@ -54,10 +54,8 @@ export default function Header() {
           className={classes.profile}
           onBlur={hoverOut}
           onFocus={hoverIn}
-
           // only usable when not logged in
           onClick={!userId ? loginClick : () => {}}
-
           // user avatar
           style={
             userId
@@ -73,22 +71,21 @@ export default function Header() {
         >
           {/* placeholder icon while not logged in */}
           {!userId && <FontAwesomeIcon icon="fa-solid fa-user" />}
-
-          {/* profile list */}
-          {showProfile && (
-            <ul>
-              <li>Public Name</li>
-              <li>Change Name</li>
-              <li>Followed Novel</li>
-              <li>Read Novel</li>
-              <li>Log Out</li>
-            </ul>
-          )}
-
-          {/* login modal */}
-          {showLogin&&<LoginModal onClose={closeLogin} />}
         </div>
       </nav>
+      {/* profile list */}
+      {showProfile && (
+        <ul className={classes.profileMenu}>
+          <li>Public Name</li>
+          <li>Change Name</li>
+          <li>Followed Novel</li>
+          <li>Read Novel</li>
+          <li>Log Out</li>
+        </ul>
+      )}
+
+      {/* login modal */}
+      {showLogin && <LoginModal onClose={closeLogin} />}
     </div>
   );
 }

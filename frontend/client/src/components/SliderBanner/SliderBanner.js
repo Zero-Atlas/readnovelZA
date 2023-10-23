@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 export default function SliderBanner(props) {
   const [bannerNo, setBannerNo] = useState(0);
-  console.log(props.data);
   useEffect(() => {
     const timer = setTimeout(() => {
       setBannerNo((prev) => {

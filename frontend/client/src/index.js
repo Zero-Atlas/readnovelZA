@@ -4,15 +4,18 @@ import "./index.css";
 import App from "./App";
 
 //font awesome
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import { faTwitter, faFontAwesome } from '@fortawesome/free-brands-svg-icons'
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { faTwitter, faFontAwesome } from "@fortawesome/free-brands-svg-icons";
+import UserContextProvider from "./context/userContextProvider";
 
-library.add(fas, faTwitter, faFontAwesome)
+library.add(fas, faTwitter, faFontAwesome);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <UserContextProvider>
+      <App />
+    </UserContextProvider>
   </React.StrictMode>
 );
