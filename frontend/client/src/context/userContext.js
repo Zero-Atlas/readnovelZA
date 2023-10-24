@@ -9,6 +9,7 @@ const UserContex = createContext({
   addFollowed:undefined,
   removeFollowed:undefined,
   editHistory:undefined,
+  changeName:undefined,
 });
 
 export default UserContex

@@ -3,7 +3,7 @@ const { body } = require("express-validator");
 
 const authController = require("../controller/auth");
 const User = require("../model/user");
-const usernameRegex = /(\w){6,}/g;
+const usernameRegex = /([\w_]){6,}/g;
 const passwordRegex = /[\w!@#$%^&*()]{6,}/g;
 
 // register route
@@ -13,7 +13,7 @@ route.post(
     body("username")
       .custom((value) => usernameRegex.test(value))
       .withMessage("Username is invalid.")
-      .custom((value) => {
+      .custom(async (value) => {
         return User.findOne({ username: value }).then((result) => {
           if (result) return Promise.reject("Username is already exist.");
         });
@@ -30,16 +30,26 @@ route.post(
   "/login",
   [
     body("username")
-      .custom((value) => usernameRegex.test(value))
-      .withMessage("User is invalid."),
+      .trim()
+      .isString()
+      .isLength({ min: 6, max: 16 })
+      .withMessage("User is invalid.")
+      .custom(async (value) => {
+        return User.findOne({ username: value }).then((result) => {
+          if (!result)
+            return Promise.reject("Username or password is incorrect.");
+        });
+      }),
     body("password")
-      .custom((value) => passwordRegex.test(value))
+      .trim()
+      .isString()
+      .isLength({ min: 6, max: 16 })
       .withMessage("Password is invalid."),
   ],
   authController.postLogin
 );
 
 //logout route
-route.post('/logout',authController.postLogout)
+route.post("/logout", authController.postLogout);
 
 module.exports = route;

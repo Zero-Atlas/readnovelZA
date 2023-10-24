@@ -1,15 +1,16 @@
 import { json } from "react-router";
 import UserContex from "./userContext";
+import { useState } from "react";
 
 export default function UserContextProvider(props) {
-  let user = {};
+  const [user,setUser]=useState({})
   //method on user------------------------------
   //auth method
   const login = (userData) => {
-    user = userData;
+    setUser(userData);
   };
   const logout = () => {
-    user = {};
+    setUser({});
     fetch(`${process.env.REACT_APP_API_KEY}/auth/logout`, { method: "POST" })
       .then((respon) => {
         if (!respon.ok) throw json("Fail to fetch logout", 500);
@@ -18,6 +19,15 @@ export default function UserContextProvider(props) {
         console.log(err);
       });
   };
+
+  //change name method
+  const changeName=(name,title)=>{
+    setUser(prev=>{
+      prev.publicName.name=name
+      prev.publicName.title=title
+      return prev
+    })
+  }
 
   //post novel method
   const addPost=(novelId)=>{}
@@ -40,6 +50,7 @@ export default function UserContextProvider(props) {
     addFollowed,
     removeFollowed,
     editHistory,
+    changeName,
   };
   return (
     <UserContex.Provider value={data}>{props.children}</UserContex.Provider>

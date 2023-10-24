@@ -1,17 +1,27 @@
-import { Form, NavLink } from "react-router-dom";
+import { Form, Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import logo from "../../static/logo2.png";
 import classes from "./Header.module.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import LoginModal from "../LoginModal/LoginModal";
+import UserContex from "../../context/userContext";
+import NameModal from "../NameModal/NameModal";
 
 export default function Header() {
+  const ct = useContext(UserContex);
   const [showProfile, setShowProfile] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-  const userId = "";
+  const [showNameModal, setShowNameModal] = useState(false);
+
+  //name modal control
+  const openNameModal = () => {
+    setShowNameModal(true);
+  };
+  const closeNameModal = () => {
+    setShowNameModal(false);
+  };
 
   //login modal control
-  const loginClick = () => {
+  const openLogin = () => {
     setShowLogin(true);
   };
   const closeLogin = () => {
@@ -19,17 +29,17 @@ export default function Header() {
   };
 
   //profile list control
-  const hoverIn = () => {
+  const profileOpen = () => {
     setShowProfile(true);
   };
-  const hoverOut = () => {
+  const profileClose = () => {
     setShowProfile(false);
   };
   return (
     <div className={"d-flex " + classes.wp}>
-      <a className={classes.logo} href="/">
+      <Link className={classes.logo} to="/">
         ReadNovel
-      </a>
+      </Link>
       <nav className={"d-flex " + classes.nav}>
         <Form className={classes.search}>
           <input type="text" name="search" placeholder="Enter keyword" />
@@ -52,15 +62,16 @@ export default function Header() {
         </NavLink>
         <div
           className={classes.profile}
-          onBlur={hoverOut}
-          onFocus={hoverIn}
+          onMouseEnter={profileOpen}
           // only usable when not logged in
-          onClick={!userId ? loginClick : () => {}}
+          onClick={!ct.user._id && openLogin}
           // user avatar
           style={
-            userId
+            ct.user._id
               ? {
-                  backgroundImage: `url(${logo})`,
+                  backgroundImage: `url(${
+                    process.env.REACT_APP_API_KEY + ct.user.avatar
+                  })`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   width: "4rem",
@@ -70,22 +81,34 @@ export default function Header() {
           }
         >
           {/* placeholder icon while not logged in */}
-          {!userId && <FontAwesomeIcon icon="fa-solid fa-user" />}
+          {!ct.user._id && <FontAwesomeIcon icon="fa-solid fa-user" />}
         </div>
+        {/* profile list */}
+        {showProfile && (
+          <ul className={classes.profileMenu} onMouseLeave={profileClose}>
+            <li>
+              <p>{ct.user.publicName.name}</p>
+            </li>
+            <li>
+              <p onClick={openNameModal}>Change Name</p>
+            </li>
+            <li>
+              <Link to="/novel/followed">Followed Novel</Link>
+            </li>
+            <li>
+              <Link to="/novel/history">Read History</Link>
+            </li>
+            <li>
+              <p onClick={ct.logout}>Log Out</p>
+            </li>
+          </ul>
+        )}
       </nav>
-      {/* profile list */}
-      {showProfile && (
-        <ul className={classes.profileMenu}>
-          <li>Public Name</li>
-          <li>Change Name</li>
-          <li>Followed Novel</li>
-          <li>Read Novel</li>
-          <li>Log Out</li>
-        </ul>
-      )}
 
       {/* login modal */}
       {showLogin && <LoginModal onClose={closeLogin} />}
+      {/* name modal */}
+      {showNameModal && <NameModal onClose={closeNameModal} />}
     </div>
   );
 }

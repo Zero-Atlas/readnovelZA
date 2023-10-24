@@ -5,8 +5,8 @@ import { useContext, useState } from "react";
 import UserContex from "../../context/userContext";
 
 const Modal = (props) => {
-  const userContext=useContext(UserContex)
-  const usernameRegex = /(\w){6,}/g;
+  const userContext = useContext(UserContex);
+  const usernameRegex = /([\w_]){6,}/g;
   const passwordRegex = /[\w!@#$%^&*()]{6,}/g;
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState("");
@@ -72,7 +72,9 @@ const Modal = (props) => {
         }
       })
       .then((data) => {
-        if(!data.message) userContext.login(data)
+        if (!data.message) {
+          userContext.login(data);
+        }else{alert(data.message)}
         return props.onClose();
       })
       .catch((err) => {
