@@ -4,7 +4,7 @@ const Novel = require("../model/novel");
 module.exports.getFollowed = (req, res, next) => {
   if (req.user) {
     return Novel.find({
-      _id: { $in: req.user.followed.map((v) => Types.ObjectId(v)) },
+      _id: { $in: req.user.followed },
     })
       .then((result) => {
         return res.status(200).json(result);
@@ -42,6 +42,14 @@ module.exports.postFollowed = (req, res, next) => {
 module.exports.postHistory = (req, res, next) => {
   const history = req.body;
   req.user.history = history;
+  return req.user
+    .save()
+    .then(() => res.status(200).json({ message: "success" }))
+    .catch((err) => next(err));
+};
+module.exports.postPublicName = (req, res, next) => {
+  const publicName = req.body;
+  req.user.publicName = publicName;
   return req.user
     .save()
     .then(() => res.status(200).json({ message: "success" }))

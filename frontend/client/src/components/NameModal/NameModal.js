@@ -1,4 +1,4 @@
-import { Form, json } from "react-router-dom";
+import { Form } from "react-router-dom";
 import classes from "./NameModal.module.css";
 import ReactDOM from "react-dom";
 import { useContext, useState } from "react";
@@ -30,35 +30,7 @@ const Modal = (props) => {
   //submit handler
   const submitHandler = async (event) => {
     event.preventDefault();
-    const sendData = {
-      publicName,
-      title,
-    };
-
-    await fetch(`${process.env.REACT_APP_API_KEY}/user/change-public-name`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(sendData),
-    })
-      .then(async (respon) => {
-        if (!respon.ok) {
-          if (respon.status === 500) {
-            throw json("Could not change public name", 500);
-          } else {
-            throw await respon.json();
-          }
-        } else {
-          return respon.json();
-        }
-      })
-      .then((data) => {
-        ct.changeName(publicName, title);
-        alert(data.message);
-        return props.onClose();
-      })
-      .catch((err) => {
-        console.error(err.message);
-      });
+    ct.changeName(publicName,title)
   };
   return (
     <div className={classes.modal}>

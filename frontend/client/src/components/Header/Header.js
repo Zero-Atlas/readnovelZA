@@ -62,7 +62,7 @@ export default function Header() {
         </NavLink>
         <div
           className={classes.profile}
-          onMouseEnter={ct.user.username?profileOpen:()=>{}}
+          onMouseEnter={ct.user.username ? profileOpen : () => {}}
           // only usable when not logged in
           onClick={!ct.user.username ? openLogin : () => {}}
           // user avatar
@@ -99,7 +99,14 @@ export default function Header() {
               <Link to="/novel/history">Read History</Link>
             </li>
             <li>
-              <p onClick={ct.logout}>Log Out</p>
+              <p
+                onClick={() => {
+                  ct.logout();
+                  profileClose();
+                }}
+              >
+                Log Out
+              </p>
             </li>
           </ul>
         )}

@@ -11,7 +11,7 @@ const schema = new mongoose.Schema({
   avatar: { type: String },
   posted: [{ type: mongoose.Types.ObjectId, ref: "Novel" }],
   followed: [{ type: mongoose.Types.ObjectId, ref: "Novel" }],
-  history: [{ type: mongoose.Types.ObjectId, ref: "Novel" }],
+  history: [{ type: String }],
 });
 
 module.exports = mongoose.model("User", schema);

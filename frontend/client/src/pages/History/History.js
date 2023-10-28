@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import classes from "./Follow.module.css";
+import classes from "./History.module.css";
 import NovelItem from "../../components/NovelItem/NovelItem";
 import { json } from "react-router";
 import { Link } from "react-router-dom";
 
-export default function Followed() {
-  const [followed, setFollowed] = useState([]);
+export default function History() {
+  const [history, setHistory] = useState([]);
   const [msg, setMsg] = useState("");
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_KEY}/user/followed`, {
+    fetch(`${process.env.REACT_APP_API_KEY}/user/history`, {
       method: "GET",
       credentials: "include",
     })
@@ -23,7 +23,7 @@ export default function Followed() {
           setMsg(data.message);
         } else {
           setMsg("");
-          setFollowed(data);
+          setHistory(data);
         }
       })
       .catch((err) => {
@@ -37,16 +37,16 @@ export default function Followed() {
         <span> / </span>
         <Link to="/search">Novel</Link>
         <span> / </span>
-        <Link to="/novel/followed">Followed</Link>
+        <Link to="/novel/history">History</Link>
       </div>
-      {followed.length > 0 && (
+      {history.length > 0 && (
         <ul className={classes.novelList}>
-          {followed.map((novel, i) => (
+          {history.map((novel, i) => (
             <NovelItem key={i} data={novel} />
           ))}
         </ul>
       )}
-      {followed.length === 0 && <p className={classes.msg}>{msg}</p>}
+      {history.length === 0 && <p className={classes.msg}>{msg}</p>}
     </div>
   );
 }

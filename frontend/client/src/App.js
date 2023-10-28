@@ -6,6 +6,7 @@ import Search from "./pages/Search/Search";
 import Content, { loader as contentLoader } from "./pages/Content/Content";
 import ErrorBoundary from "./pages/Error/ErrorBoundary";
 import Follow from "./pages/Follow/Follow";
+import History from "./pages/History/History";
 
 const router = createBrowserRouter([
   {
@@ -14,8 +15,9 @@ const router = createBrowserRouter([
     errorElement: <ErrorBoundary />,
     children: [
       { index: true, element: <Home />, loader: homeLoader },
+      { path: "/novel/followed", element: <Follow /> },
+      { path: "/novel/history", element: <History /> },
       { path: "/novel/:novelName", element: <Novel />, loader: detailLoader },
-      { path: "/novel/follow", element: <Follow /> },
       {
         path: "/novel/:novelName/:chapterNo",
         element: <Content />,

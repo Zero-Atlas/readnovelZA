@@ -10,13 +10,13 @@ export default function UserContextProvider(props) {
     setUser(userData);
   };
   const logout = () => {
-    setUser({});
     fetch(`${process.env.REACT_APP_API_KEY}/auth/logout`, {
       method: "POST",
       credentials: "include",
     })
       .then((respon) => {
         if (!respon.ok) throw json("Fail to fetch logout", 500);
+        setUser({});
       })
       .catch((err) => {
         console.log(err);
@@ -29,12 +29,13 @@ export default function UserContextProvider(props) {
       prev.publicName.name = name;
       prev.publicName.title = title;
 
+      console.log(prev.publicName);
       //save to data base
       fetch(`${process.env.REACT_APP_API_KEY}/user/public-name`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(prev.publicName),
-        credentials:"include"
+        credentials: "include",
       })
         .then((respon) => {
           if (!respon.ok) throw json("Fail to fetch", 500);
@@ -56,7 +57,7 @@ export default function UserContextProvider(props) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user.followed),
-      credentials:"include"
+      credentials: "include",
     })
       .then((respon) => {
         if (!respon.ok) throw json("Fail to fetch", 500);
@@ -74,7 +75,7 @@ export default function UserContextProvider(props) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user.followed),
-      credentials:"include"
+      credentials: "include",
     })
       .then((respon) => {
         if (!respon.ok) throw json("Fail to fetch", 500);
@@ -101,7 +102,7 @@ export default function UserContextProvider(props) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user.history),
-        credentials:"include"
+        credentials: "include",
       })
         .then((respon) => {
           if (!respon.ok) throw json("Fail to fetch", 500);
