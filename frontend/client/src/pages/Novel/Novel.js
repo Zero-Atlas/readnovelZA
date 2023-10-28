@@ -1,9 +1,28 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, json, useLoaderData, useNavigate } from "react-router-dom";
+import { nameToUrl, urlToName } from "../../util/convertString";
 import classes from "./Novel.module.css";
-import cover from "../../static/cover.jpg";
+import { compareTime } from "../../util/dateUtil";
+import { useContext, useState } from "react";
+import UserContex from "../../context/userContext";
 
 export default function Novel(props) {
-  const params = useParams();
+  const ct = useContext(UserContex);
+  const navigate = useNavigate();
+  const data = useLoaderData();
+  const [followState, setFollowState] = useState(
+    ct.user.followed && ct.user.followed.includes(data._id)
+  );
+  const showedChapter = data.chapters.sort((a, b) => b.chapter - a.chapter);
+
+  const followHandler = () => {
+    if (followState) {
+      ct.removeFollowed(data._id);
+    } else {
+      ct.addFollowed(data._id);
+    }
+    setFollowState(ct.user.followed.includes(data._id));
+  };
+
   return (
     <div className={classes.wp}>
       <div className={classes.path}>
@@ -11,55 +30,62 @@ export default function Novel(props) {
         <span> / </span>
         <Link to="/search">Novel</Link>
         <span> / </span>
-        <Link to={"/novel/" + params.novelName}>Novel name</Link>
+        <Link to={"/novel/" + data.name}>{urlToName(data.name)}</Link>
       </div>
       <div className={classes.detail}>
         <div className={classes.image}>
-          <img src={cover} alt="thumb" />
+          <img
+            src={`${process.env.REACT_APP_API_KEY}${data.image}`}
+            alt="thumb"
+          />
         </div>
         <div className={classes.text}>
-          <h1>Novel Name</h1>
+          <h1>{urlToName(data.name)}</h1>
           <p className={classes.other}>
-            Other name: <span>Other Name</span>
+            Other name: <span>{urlToName(data.other)}</span>
           </p>
           <p className={classes.author}>
-            Author: <span>Author Name</span>
+            Author: <span>{data.author}</span>
           </p>
           <p className={classes.status}>
-            Status: <span>Ongoing</span>
+            Status: <span>{data.status}</span>
           </p>
           <p className={classes.rating}>
-            Rating: <span>5/5 185-rated</span>
+            Rating:{" "}
+            <span>{`${data.rating.score}/5 ${data.rating.rated}-rated`}</span>
           </p>
           <p className={classes.total}>
-            Total: <span>249 chapter</span>
+            Total: <span>{data.chapters.length} chapter</span>
           </p>
           <div className={classes.genre}>
             <p>Genre:</p>
             <ul className={classes.genreList}>
-              <li>
-                <Link to="/search?genre=action">Action</Link>
-              </li>
-              <li>
-                <Link to="/search?genre=comedy">Comedy</Link>
-              </li>
-              <li>
-                <Link to="/search?genre=drama">Drama</Link>
-              </li>
-              <li>
-                <Link to="/search?genre=super-nature">Super Nature</Link>
-              </li>
+              {data.category.map((cat) => (
+                <li key={cat}>
+                  <Link to={"/search?genre=" + nameToUrl(cat)}>{cat}</Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div className={classes.action}>
             <div className={classes.follow}>
-              <button>Follow</button>
-              <span>2048 follower</span>
+              <button onClick={followHandler}>
+                {followState ? "Unfollow" : "Follow"}
+              </button>
+              <span>99 followed</span>
             </div>
-            <Link className={classes.continue} to="/continue||latest">
-              Continue from chapter 99
+            <Link
+              className={classes.continue}
+              to={`/novel/${data.name}/${showedChapter[0]}`}
+            >
+              Continue from chapter {showedChapter[0].chapter}
             </Link>
-            <Link className={classes.start} to="/start">
+            <Link
+              className={classes.start}
+              to={`/novel/${data.name}/${
+                showedChapter[showedChapter.length - 1]
+              }`}
+            >
               Read from start
             </Link>
           </div>
@@ -67,20 +93,7 @@ export default function Novel(props) {
       </div>
       <div className={classes.description}>
         <h2>Description:</h2>
-        <p>
-          Contrary to popular belief, Lorem Ipsum is not simply random text. It
-          has roots in a piece of classical Latin literature from 45 BC, making
-          it over 2000 years old. Richard McClintock, a Latin professor at
-          Hampden-Sydney College in Virginia, looked up one of the more obscure
-          Latin words, consectetur, from a Lorem Ipsum passage, and going
-          through the cites of the word in classical literature, discovered the
-          undoubtable source. Lorem Ipsum comes from sections 1.10.32 and
-          1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and
-          Evil) by Cicero, written in 45 BC. This book is a treatise on the
-          theory of ethics, very popular during the Renaissance. The first line
-          of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in
-          section 1.10.32.
-        </p>
+        <p>{data.description}</p>
       </div>
       <div className={classes.chapters}>
         <h2>Chapter list:</h2>
@@ -96,25 +109,43 @@ export default function Novel(props) {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>2</td>
-              <td>N/A</td>
-              <td></td>
-              <td>avalable</td>
-              <td>0</td>
-              <td>3 hours ago</td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>N/A</td>
-              <td></td>
-              <td>avalable</td>
-              <td>214</td>
-              <td>18 hours ago</td>
-            </tr>
+            {showedChapter.map((c, i) => (
+              <tr
+                key={i}
+                onClick={navigate.bind(
+                  null,
+                  `/novel/${data.name}/${c.chapter}`
+                )}
+              >
+                <td>{c.chapter}</td>
+                <td>{c.title}</td>
+                <td>{c.group}</td>
+                <td>{c.status}</td>
+                <td>{c.viewed}</td>
+                <td>{compareTime(new Date(), new Date(c.updatedAt))} ago</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
     </div>
   );
+}
+
+export async function loader({ params }) {
+  const novelName = params.novelName;
+  return await fetch(`${process.env.REACT_APP_API_KEY}/novel/${novelName}`, {
+    method: "GET",
+    credentials: "include",
+  })
+    .then((respon) => {
+      if (!respon.ok) {
+        if (respon.status === 500)
+          throw json("failed to fetch novel detail", 500);
+        else return respon.json();
+      } else return respon.json();
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 }

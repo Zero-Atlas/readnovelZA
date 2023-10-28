@@ -4,8 +4,6 @@ const UserContex = createContext({
   user: {},
   login:undefined,
   logout:undefined,
-  addPost:undefined,
-  deletePost:undefined,
   addFollowed:undefined,
   removeFollowed:undefined,
   editHistory:undefined,

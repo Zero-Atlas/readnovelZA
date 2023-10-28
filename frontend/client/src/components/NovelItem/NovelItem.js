@@ -8,7 +8,7 @@ export default function NovelItem(props) {
   return (
     <li className={classes.listItem}>
       <Link to={`/novel/${props.data.name}`} className={classes.image}>
-        <img src={props.data.image} alt={props.data.name} />
+        <img src={`${process.env.REACT_APP_API_KEY}${props.data.image}`} alt={props.data.name} />
       </Link>
       <Link to={`/novel/${props.data.name}`} className={classes.title}>
         {props.data.name}

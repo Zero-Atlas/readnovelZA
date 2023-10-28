@@ -60,7 +60,7 @@ export async function loader() {
 }
 
 async function fetchBanner() {
-  const respon = await fetch(`${process.env.REACT_APP_API_KEY}/novel/banner`);
+  const respon = await fetch(`${process.env.REACT_APP_API_KEY}/novel/banner`,{method:"GET",credentials:"include"});
   if (!respon.ok) {
     console.log(respon);
     return [];
@@ -69,7 +69,7 @@ async function fetchBanner() {
   }
 }
 async function fetchRecent() {
-  const respon = await fetch(`${process.env.REACT_APP_API_KEY}/novel/recent`);
+  const respon = await fetch(`${process.env.REACT_APP_API_KEY}/novel/recent`,{method:"GET",credentials:"include"});
   if (!respon.ok) {
     console.log(respon);
     return [];
@@ -78,7 +78,7 @@ async function fetchRecent() {
   }
 }
 async function fetchPopular() {
-  const respon = await fetch(`${process.env.REACT_APP_API_KEY}/novel/popular`);
+  const respon = await fetch(`${process.env.REACT_APP_API_KEY}/novel/popular`,{method:"GET",credentials:"include"});
   if (!respon.ok) {
     console.log(respon);
     return [];
@@ -87,7 +87,7 @@ async function fetchPopular() {
   }
 }
 async function fetchNew() {
-  const respon = await fetch(`${process.env.REACT_APP_API_KEY}/novel/new`);
+  const respon = await fetch(`${process.env.REACT_APP_API_KEY}/novel/new`,{method:"GET",credentials:"include"});
   if (!respon.ok) {
     console.log(respon);
     return [];
@@ -96,7 +96,7 @@ async function fetchNew() {
   }
 }
 async function fetchSidebar() {
-  const respon = await fetch(`${process.env.REACT_APP_API_KEY}/novel/all`);
+  const respon = await fetch(`${process.env.REACT_APP_API_KEY}/novel/all`,{method:"GET",credentials:"include"});
   if (!respon.ok) {
     console.log(respon);
     return [];

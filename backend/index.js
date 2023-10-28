@@ -48,7 +48,13 @@ const fileFilter = (req, file, cb) => {
 
 // express init
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: [process.env.CLIENT_URL, process.env.ADMIN_URL],
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE"],
+    credentials: true,
+  })
+);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(
@@ -56,14 +62,39 @@ app.use(
 );
 app.use("/public", express.static(path.join(__dirname, "public")));
 
-// authorized user init
-app.use("/", (req, res, next) => {
-  if (!req.user) return next();
+//session init
+app.use(
+  session({
+    store: store,
+    secret: "readnovel secret",
+    resave: false,
+    saveUninitialized: false,
+    name: "readnovelSession",
+    cookie: {
+      sameSite: "lax",
+      secure: Boolean(process.env.production),
+      httpOnly: true,
+    },
+  })
+);
 
-  return User.findById(req.user._id).then((user) => {
-    if (user) req.user = user;
-    return next();
-  });
+// authorized user init
+app.set("trust proxy", 1);
+app.use("/", (req, res, next) => {
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization",
+    "allowedHeaders,socket.io"
+  );
+
+  if (!req.session.user) return next();
+
+  return User.findById(req.session.user._id)
+    .then((user) => {
+      if (user) req.user = user;
+      return next();
+    })
+    .catch((err) => next(err));
 });
 
 //route
@@ -71,11 +102,32 @@ app.use("/novel", novelRouter);
 app.use("/user", userRouter);
 app.use("/auth", authRouter);
 
+//error handler
+app.use((error, req, res, next) => {
+  res.status(500).json({
+    message: "Some error occured on server",
+    error,
+  });
+});
+
+//route not found handler
+app.use(function (req, res, next) {
+  res.status(404);
+  // respond with json
+  if (req.accepts("json")) {
+    res.json({ error: "Not found" });
+    return;
+  }
+
+  // default to plain-text. send()
+  res.type("txt").send("Not found");
+});
+
 mongoose
   .connect(MONGODB_URI)
   .then(() => {
     console.log("connected to database");
-    const server = app.listen(5000);
+    const server = app.listen(process.env.PORT || 5000);
   })
   .catch((err) => {
     console.log(err);

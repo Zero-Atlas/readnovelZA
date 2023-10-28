@@ -12,7 +12,7 @@ export default function SidebarList(props) {
               className={classes.image}
               onClick={navigate.bind(null, `/novel/${novel.name}`)}
             >
-              <img src={novel.image} alt="alter" />
+              <img src={`${process.env.REACT_APP_API_KEY}${novel.image}`} alt="alter" />
             </div>
             <div className={classes.detail}>
               <p onClick={navigate.bind(null, `/novel/${novel.name}`)}>

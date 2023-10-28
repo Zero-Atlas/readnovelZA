@@ -22,7 +22,7 @@ export default function SliderBanner(props) {
           className={classes.image}
           style={{
             position: "absolute",
-            backgroundImage: `url(${props.data[bannerNo].banner})`,
+            backgroundImage: `url(${process.env.REACT_APP_API_KEY}${props.data[bannerNo].banner})`,
             width: "100%",
             height: "100%",
             backgroundSize: "cover",

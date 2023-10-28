@@ -52,4 +52,7 @@ route.post(
 //logout route
 route.post("/logout", authController.postLogout);
 
+//get user info on load page
+route.get('/get-user-info',authController.getUserInfo)
+
 module.exports = route;

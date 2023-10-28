@@ -7,20 +7,14 @@ exports.getBanner = (req, res, next) => {
     .then((novels) => {
       return res.status(200).json(novels.filter((novel) => novel.banner));
     })
-    .catch((err) => {
-      console.log(err);
-      return next(err);
-    });
+    .catch((err) => next(err));
 };
 exports.getAll = (req, res, next) => {
   return Novel.find()
     .then((novels) => {
       return res.status(200).json(novels);
     })
-    .catch((err) => {
-      console.log(err);
-      return next(err);
-    });
+    .catch((err) => next(err));
 };
 
 exports.getRecent = (req, res, next) => {
@@ -32,10 +26,7 @@ exports.getRecent = (req, res, next) => {
       });
       return res.status(200).json(novels.slice(0, 10));
     })
-    .catch((err) => {
-      console.log(err);
-      return next(err);
-    });
+    .catch((err) => next(err));
 };
 
 exports.getPopular = (req, res, next) => {
@@ -47,10 +38,7 @@ exports.getPopular = (req, res, next) => {
       });
       return res.status(200).json(novels.slice(0, 10));
     })
-    .catch((err) => {
-      console.log(err);
-      return next(err);
-    });
+    .catch((err) => next(err));
 };
 
 exports.getNew = (req, res, next) => {
@@ -62,10 +50,7 @@ exports.getNew = (req, res, next) => {
       });
       return res.status(200).json(novels.slice(0, 10));
     })
-    .catch((err) => {
-      console.log(err);
-      return next(err);
-    });
+    .catch((err) => next(err));
 };
 
 exports.getDetail = (req, res, next) => {
@@ -75,10 +60,7 @@ exports.getDetail = (req, res, next) => {
       if (novel) return res.status(200).json(novel);
       else return res.status(202).json({ message: "Could not found novel" });
     })
-    .catch((err) => {
-      console.log(err);
-      return next(err);
-    });
+    .catch((err) => next(err));
 };
 
 exports.getContent = (req, res, next) => {
@@ -96,8 +78,5 @@ exports.getContent = (req, res, next) => {
           return res.status(202).json({ message: "Could not found chapter" });
       } else return res.status(202).json({ message: "Could not found novel" });
     })
-    .catch((err) => {
-      console.log(err);
-      return next(err);
-    });
+    .catch((err) => next(err));
 };

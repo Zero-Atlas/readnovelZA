@@ -1,10 +1,16 @@
-import { Link, useLoaderData, useParams } from "react-router-dom";
+import { Link, json, useLoaderData, useParams } from "react-router-dom";
 import { urlToName } from "../../util/convertString";
 import classes from "./Content.module.css";
+import { useContext } from "react";
+import UserContex from "../../context/userContext";
 
 export default function Content() {
   const params = useParams();
   const data = useLoaderData();
+  const ct = useContext(UserContex);
+  if (ct.user.username) {
+    ct.editHistory(params.novelName);
+  }
   return (
     <>
       <div className={classes.wp}>
@@ -24,10 +30,10 @@ export default function Content() {
       </div>
       <div className={classes.content}>
         <div className={classes.wp}>
-          {data&&data.message&&data.message}
-          {!data&&<p>No content</p>}
-          
-          {data&&data.content&&data.content}
+          {data && data.message && data.message}
+          {!data && <p>No content</p>}
+
+          {data && data.content && data.content}
         </div>
       </div>
     </>
@@ -37,13 +43,17 @@ export default function Content() {
 export async function loader({ params }) {
   const novelName = params.novelName;
   const chapterNo = params.chapterNo;
-  const respon = await fetch(
-    `${process.env.REACT_APP_API_KEY}/novel/${novelName}/${chapterNo}`
-  );
-  if (!respon.ok) {
-    console.log(respon);
-    return null;
-  }
-  const data = await respon.json();
-  return data;
+  return await fetch(
+    `${process.env.REACT_APP_API_KEY}/novel/${novelName}/${chapterNo}`,
+    { method: "GET", credentials: "include" }
+  )
+    .then((respon) => {
+      if (!respon.ok) {
+        throw json("Failed to fetch", 500);
+      }
+      return respon.json();
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 }

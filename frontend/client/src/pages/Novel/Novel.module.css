@@ -145,6 +145,7 @@ p.rating span {
 .table tbody tr td:nth-child(2) {
   text-align: left;
 }
+.table tbody tr:hover{cursor: pointer;}
 .table tbody tr:hover td {
   background-color: #d8d8d8;
 }

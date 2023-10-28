@@ -62,12 +62,12 @@ export default function Header() {
         </NavLink>
         <div
           className={classes.profile}
-          onMouseEnter={profileOpen}
+          onMouseEnter={ct.user.username?profileOpen:()=>{}}
           // only usable when not logged in
-          onClick={!ct.user._id && openLogin}
+          onClick={!ct.user.username ? openLogin : () => {}}
           // user avatar
           style={
-            ct.user._id
+            ct.user.username
               ? {
                   backgroundImage: `url(${
                     process.env.REACT_APP_API_KEY + ct.user.avatar
@@ -84,7 +84,7 @@ export default function Header() {
           {!ct.user._id && <FontAwesomeIcon icon="fa-solid fa-user" />}
         </div>
         {/* profile list */}
-        {showProfile && (
+        {showProfile && ct.user.username && (
           <ul className={classes.profileMenu} onMouseLeave={profileClose}>
             <li>
               <p>{ct.user.publicName.name}</p>
