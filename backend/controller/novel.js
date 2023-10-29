@@ -81,9 +81,21 @@ exports.getContent = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-exports.getCategory=(req,res,next)=>{
-  return Novel.find().select('category').then(novels=>{
-    const catList=novels.flat()
-
-  })
-}
+exports.getCategory = (req, res, next) => {
+  return Novel.find()
+    .select("category")
+    .then((novels) => {
+      const catList = novels
+        .map((oj) => oj.category)
+        .flat()
+        .filter((value, index, arr) => {
+          if (index === arr.indexOf(value) && index === arr.lastIndexOf(value))
+            return true;
+          if (index === arr.indexOf(value) && index !== arr.lastIndexOf(value))
+            return true;
+          return false;
+        });
+      return res.status(200).json(catList);
+    })
+    .catch((err) => next(err));
+};
