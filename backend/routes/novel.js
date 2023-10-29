@@ -10,7 +10,8 @@ Router.get('/new',novelController.getNew)
 Router.get('/all',novelController.getAll)
 
 // router for search page
-// Router.get('/category',novelController.getCategory)
+Router.get('/category',novelController.getCategory)
+Router.get('/search',novelController.postSearch)
 
 // router for novel read
 Router.get('/:novelName/:chapterNo',novelController.getContent)

@@ -1,19 +1,35 @@
-import { Link, json } from "react-router-dom";
+import { Link, json, useLoaderData, useSearchParams } from "react-router-dom";
 import classes from "./Search.module.css";
 import { useEffect, useState } from "react";
 import { nameToUrl, urlToName } from "../../util/convertString";
 
 export default function Search() {
-  const [result, setResult] = useState([]);
-  const [genre, setGenre] = useState("");
-  const genreList = ["Action", "Adventure", "Comedy", "Drama"];
+  const loaderData = useLoaderData() || {};
+  const query = useSearchParams() || {};
+  const [result, setResult] = useState({});
+  const [page, setPage] = useState(query.page || 1);
+  const [genre, setGenre] = useState(query.genre || "");
+  const genreList = loaderData || [];
   const [sortStyle, setSortStyle] = useState("recent");
+
+  const pageUp = () => {
+    setPage((prev) => {
+      if (prev < result.maxPage) return prev + 1;
+      else return prev;
+    });
+  };
+  const pageDown = () => {
+    setPage((prev) => {
+      if (prev > 1) return prev - 1;
+      else return prev;
+    });
+  };
 
   //sort function trigger when sortStyle change
   useEffect(() => {
     setResult((prev) => {
-      if (prev)
-        prev.sort((a, b) => {
+      if (prev.result)
+        prev.result.sort((a, b) => {
           switch (sortStyle) {
             case "new":
               return (
@@ -40,7 +56,7 @@ export default function Search() {
       fetch(
         `${process.env.REACT_APP_API_KEY}/novel/search?genre=${nameToUrl(
           genre
-        )}`,
+        )}&page=${page}`,
         { method: "GET", credentials: "include" }
       )
         .then((respon) => {
@@ -48,8 +64,8 @@ export default function Search() {
           throw json("Failed to fetch", 500);
         })
         .then((data) => {
-          if (typeof data === "object" && data.length > 0) {
-            data.sort(
+          if (typeof data === "object") {
+            data.result.sort(
               (a, b) =>
                 new Date(a.updatedAt).getTime() -
                 new Date(b.updatedAt).getTime()
@@ -65,7 +81,7 @@ export default function Search() {
           console.error(err);
         });
     }
-  }, [genre]);
+  }, [genre, page]);
 
   return (
     <div className={classes.wp}>
@@ -92,36 +108,56 @@ export default function Search() {
           </button>
         </div>
         <div className={classes.page}>
-          <button className={classes.prev} disabled={true}>
+          <button
+            onClick={pageDown}
+            className={classes.prev}
+            disabled={page === 1}
+          >
             Previous
           </button>
-          <button className={classes.next}>Next</button>
+          <button
+            onClick={pageUp}
+            className={classes.next}
+            disabled={page === result.maxPage}
+          >
+            Next
+          </button>
         </div>
         {/* ----------------------Search result------------------------ */}
         <ul className={classes.result}>
-          {result.length > 0 &&
-            result.map((novel, i) => (
+          {result.result &&
+            result.result.map((novel, i) => (
               <li key={i}>
-                <Link to={"/novel/" + nameToUrl(novel.name)}>
+                <Link to={"/novel/" + novel.name}>
                   <div className={classes.image}>
                     <img
                       src={`${process.env.REACT_APP_API_KEY}${novel.image}`}
-                      alt={novel.name}
+                      alt={urlToName(novel.name)}
                     />
                   </div>
                   <p>{urlToName(novel.name)}</p>
                 </Link>
               </li>
             ))}
-          {result.length === 0 && (
+          {result.result && (
             <p className={classes.noResult}>There is no novel matched</p>
           )}
         </ul>
         <div className={classes.page}>
-          <button className={classes.prev} disabled={true}>
+          <button
+            onClick={pageDown}
+            className={classes.prev}
+            disabled={page === 1}
+          >
             Previous
           </button>
-          <button className={classes.next}>Next</button>
+          <button
+            onClick={pageUp}
+            className={classes.next}
+            disabled={page === result.maxPage}
+          >
+            Next
+          </button>
         </div>
         {/* -----------------------Genre field------------------------- */}
         <div className={classes.genre}>
@@ -153,9 +189,6 @@ export async function loader() {
     .then((respon) => {
       if (!respon.ok) throw json("Failed to fetch", 500);
       return respon.json();
-    })
-    .then((data) => {
-      return data.map((cat) => urlToName(cat));
     })
     .catch((err) => {
       console.error(err);

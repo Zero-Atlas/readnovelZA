@@ -2,7 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home, { loader as homeLoader } from "./pages/Home/Home";
 import RootLayout from "./layouts/RootLayout";
 import Novel, { loader as detailLoader } from "./pages/Novel/Novel";
-import Search from "./pages/Search/Search";
+import Search, { loader as categoryLoader } from "./pages/Search/Search";
 import Content, { loader as contentLoader } from "./pages/Content/Content";
 import ErrorBoundary from "./pages/Error/ErrorBoundary";
 import Follow from "./pages/Follow/Follow";
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         element: <Content />,
         loader: contentLoader,
       },
-      { path: "/search", element: <Search /> },
+      { path: "/search", element: <Search />, loader: categoryLoader },
     ],
   },
 ]);
