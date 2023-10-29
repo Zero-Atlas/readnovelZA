@@ -9,6 +9,9 @@ Router.get('/popular',novelController.getPopular)
 Router.get('/new',novelController.getNew)
 Router.get('/all',novelController.getAll)
 
+// router for search page
+// Router.get('/category',novelController.getCategory)
+
 // router for novel read
 Router.get('/:novelName/:chapterNo',novelController.getContent)
 

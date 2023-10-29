@@ -80,3 +80,10 @@ exports.getContent = (req, res, next) => {
     })
     .catch((err) => next(err));
 };
+
+exports.getCategory=(req,res,next)=>{
+  return Novel.find().select('category').then(novels=>{
+    const catList=novels.flat()
+
+  })
+}

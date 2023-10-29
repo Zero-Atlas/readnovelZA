@@ -1,16 +1,95 @@
-import { Link } from "react-router-dom";
+import { Link, json } from "react-router-dom";
 import classes from "./Search.module.css";
-import cover from "../../static/cover.jpg";
+import { useEffect, useState } from "react";
+import { nameToUrl, urlToName } from "../../util/convertString";
 
 export default function Search() {
+  const [result, setResult] = useState([]);
+  const [genre, setGenre] = useState("");
+  const genreList = ["Action", "Adventure", "Comedy", "Drama"];
+  const [sortStyle, setSortStyle] = useState("recent");
+
+  //sort function trigger when sortStyle change
+  useEffect(() => {
+    setResult((prev) => {
+      if (prev)
+        prev.sort((a, b) => {
+          switch (sortStyle) {
+            case "new":
+              return (
+                new Date(a.createdAt).getTime() -
+                new Date(b.createdAt).getTime()
+              );
+            case "view":
+              return a.rating.score - b.rating.score;
+            default:
+              return (
+                new Date(a.updatedAt).getTime() -
+                new Date(b.updatedAt).getTime()
+              );
+          }
+        });
+      return prev;
+    });
+  }, [sortStyle]);
+
+  //search function trigger when genre change
+  useEffect(() => {
+    //only run when genre is not empty
+    if (genre) {
+      fetch(
+        `${process.env.REACT_APP_API_KEY}/novel/search?genre=${nameToUrl(
+          genre
+        )}`,
+        { method: "GET", credentials: "include" }
+      )
+        .then((respon) => {
+          if (respon.ok) return respon.json();
+          throw json("Failed to fetch", 500);
+        })
+        .then((data) => {
+          if (typeof data === "object" && data.length > 0) {
+            data.sort(
+              (a, b) =>
+                new Date(a.updatedAt).getTime() -
+                new Date(b.updatedAt).getTime()
+            );
+            return setResult(data);
+          }
+        })
+        .then(() => {
+          //reset sortStyle
+          setSortStyle("recent");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, [genre]);
+
   return (
     <div className={classes.wp}>
       <div className={classes.title}>Novel list</div>
       <div className={classes.grid}>
         <div className={classes.sort}>
-          <button className={classes.recent}>Recent</button>
-          <button className={classes.new}>New</button>
-          <button className={classes.view}>View</button>
+          <button
+            onClick={setSortStyle.bind(null, "recent")}
+            className={classes.recent}
+          >
+            Recent
+          </button>
+          <button
+            onClick={setSortStyle.bind(null, "new")}
+            className={classes.new}
+          >
+            New
+          </button>
+          <button
+            onClick={setSortStyle.bind(null, "view")}
+            className={classes.view}
+          >
+            View
+          </button>
         </div>
         <div className={classes.page}>
           <button className={classes.prev} disabled={true}>
@@ -20,54 +99,23 @@ export default function Search() {
         </div>
         {/* ----------------------Search result------------------------ */}
         <ul className={classes.result}>
-          <li>
-            <Link to="/novel/novel-name">
-              <div className={classes.image}>
-                <img src={cover} alt="novel-name" />
-              </div>
-              <p>Novel Name</p>
-            </Link>
-          </li>
-          <li>
-            <Link to="/novel/novel-name">
-              <div className={classes.image}>
-                <img src={cover} alt="novel-name" />
-              </div>
-              <p>Novel Name</p>
-            </Link>
-          </li>
-          <li>
-            <Link to="/novel/novel-name">
-              <div className={classes.image}>
-                <img src={cover} alt="novel-name" />
-              </div>
-              <p>Novel Name</p>
-            </Link>
-          </li>
-          <li>
-            <Link to="/novel/novel-name">
-              <div className={classes.image}>
-                <img src={cover} alt="novel-name" />
-              </div>
-              <p>Novel Name</p>
-            </Link>
-          </li>
-          <li>
-            <Link to="/novel/novel-name">
-              <div className={classes.image}>
-                <img src={cover} alt="novel-name" />
-              </div>
-              <p>Novel Name</p>
-            </Link>
-          </li>
-          <li>
-            <Link to="/novel/novel-name">
-              <div className={classes.image}>
-                <img src={cover} alt="novel-name" />
-              </div>
-              <p>Novel Name</p>
-            </Link>
-          </li>
+          {result.length > 0 &&
+            result.map((novel, i) => (
+              <li key={i}>
+                <Link to={"/novel/" + nameToUrl(novel.name)}>
+                  <div className={classes.image}>
+                    <img
+                      src={`${process.env.REACT_APP_API_KEY}${novel.image}`}
+                      alt={novel.name}
+                    />
+                  </div>
+                  <p>{urlToName(novel.name)}</p>
+                </Link>
+              </li>
+            ))}
+          {result.length === 0 && (
+            <p className={classes.noResult}>There is no novel matched</p>
+          )}
         </ul>
         <div className={classes.page}>
           <button className={classes.prev} disabled={true}>
@@ -80,25 +128,36 @@ export default function Search() {
           <fieldset>
             <legend>Genre</legend>
             <ul className={classes.category}>
-              <li className={classes.active}>Action1</li>
-              <li>Adventure2</li>
-              <li>Comedy3</li>
-              <li>Drama4</li>
-              <li>Romatic</li>
-              <li>Action</li>
-              <li>Adventure</li>
-              <li>Comedy</li>
-              <li>Drama</li>
-              <li>Romatic</li>
-              <li>Action</li>
-              <li>Adventure</li>
-              <li>Comedy</li>
-              <li>Drama</li>
-              <li>Romatic</li>
+              {genreList.map((g, i) => (
+                <li
+                  key={i}
+                  onClick={setGenre.bind(null, g)}
+                  className={g === genre ? classes.active : undefined}
+                >
+                  {g}
+                </li>
+              ))}
             </ul>
           </fieldset>
         </div>
       </div>
     </div>
   );
+}
+
+export async function loader() {
+  return await fetch(`${process.env.REACT_APP_API_KEY}/novel/category`, {
+    method: "GET",
+    credentials: "include",
+  })
+    .then((respon) => {
+      if (!respon.ok) throw json("Failed to fetch", 500);
+      return respon.json();
+    })
+    .then((data) => {
+      return data.map((cat) => urlToName(cat));
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 }
