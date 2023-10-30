@@ -10,7 +10,7 @@
 .body{
   min-height: 80vh;
   background-color: #F5ECEC;
-  padding: 1rem 0;
+  padding-bottom: 1rem;
 }
 .body *{
   background-color: #fff;

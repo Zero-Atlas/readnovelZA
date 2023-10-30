@@ -1,11 +1,8 @@
-.wp {
-  margin: 0 auto;
-  transform: translateY(-1rem);
-  max-width: 120rem;
-}
 .path {
+  margin: 0 auto;
+  max-width: 120rem;
   border-bottom: 3px solid #d4cdcd;
-  padding: 1rem 2rem;
+  padding: 1rem;
 }
 .path a {
   color: #8c8383;
@@ -17,15 +14,102 @@
   color: #fa96c9;
 }
 
-.content {
+.wp {
   background-color: #333333;
   color: #eee;
   min-height: 60rem;
+  position: relative;
+  padding-bottom: 10rem;
 }
-.content * {
+.wp * {
   background-color: #333333;
 }
-.content .wp {
+.wp .content {
   transform: none;
   padding: 1rem;
+  margin: 0 auto;
+  max-width: 120rem;
 }
+
+.sticky {
+  margin: 0 auto;
+  max-width: 120rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  background-color: #0a0a0a;
+  color: #d6d6d6;
+  padding: 1rem;
+  transition: all 0.5s ease-in-out;
+}
+.sticky * {
+  transition: all 0.5s ease-in-out;
+  background-color: inherit;
+  color: inherit;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  font-size: 1.6rem;
+  display: inline-block;
+  padding: 0.4rem;
+}
+.sticky *:hover {
+  color: #fa3e80;
+  cursor: pointer;
+}
+.sticky *:disabled {
+  color: inherit;
+  cursor: not-allowed;
+}
+.sticky.expanded {
+  background-color: #0a0a0a92;
+  position: sticky;
+  top: 0;
+  max-width: 100%;
+}
+.sticky.expanded * {
+  background-color: #0a0a0a00;
+}
+
+.cta {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding-top: 1rem;
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  width: 100%;
+}
+.cta button,
+.cta a {
+  background-color: #f50057;
+  border: none;
+  display: inline-block;
+  font-size: 1.6rem;
+  font-weight: 400;
+  text-decoration: none;
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+}
+.cta button:hover,
+.cta a:hover {
+  background-color: #fa3e80;
+  cursor: pointer;
+}
+
+button.top{
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-color: #fa3e80;
+  color: #fff;
+  opacity: 0.4;
+  border-radius: 50%;
+  border: none;
+}
+button.top:hover{cursor: pointer;}

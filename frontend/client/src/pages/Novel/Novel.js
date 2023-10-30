@@ -1,4 +1,4 @@
-import { Link, json, useLoaderData, useNavigate } from "react-router-dom";
+import { Link, json, redirect, useLoaderData, useNavigate } from "react-router-dom";
 import { nameToUrl, urlToName } from "../../util/convertString";
 import classes from "./Novel.module.css";
 import { compareTime } from "../../util/dateUtil";
@@ -12,7 +12,8 @@ export default function Novel(props) {
   const [followState, setFollowState] = useState(
     ct.user.followed && ct.user.followed.includes(data._id)
   );
-  const showedChapter = data.chapters.sort((a, b) => b.chapter - a.chapter);
+  const showedChapter =
+    data.chapters && data.chapters.sort((a, b) => b.chapter - a.chapter);
 
   const followHandler = () => {
     if (followState) {
@@ -139,11 +140,11 @@ export async function loader({ params }) {
     credentials: "include",
   })
     .then((respon) => {
-      if (!respon.ok) {
-        if (respon.status === 500)
-          throw json("failed to fetch novel detail", 500);
-        else return respon.json();
-      } else return respon.json();
+      if (respon.status === 500)
+        throw json("failed to fetch novel detail", 500);
+      if(respon.status===202)
+        return redirect('/')
+      return respon.json();
     })
     .catch((err) => {
       console.error(err);

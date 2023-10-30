@@ -5,12 +5,13 @@ import { nameToUrl, urlToName } from "../../util/convertString";
 
 export default function Search() {
   const loaderData = useLoaderData() || {};
-  const query = useSearchParams() || {};
+  const [query, setQuery] = useSearchParams() || {};
   const [result, setResult] = useState({});
-  const [page, setPage] = useState(query.page || 1);
-  const [genre, setGenre] = useState(query.genre || "");
+  const [page, setPage] = useState(query.get("page") || 1);
+  const [genre, setGenre] = useState(query.get("genre") || "");
   const genreList = loaderData || [];
   const [sortStyle, setSortStyle] = useState("recent");
+  console.log(result);
 
   const pageUp = () => {
     setPage((prev) => {
@@ -139,7 +140,7 @@ export default function Search() {
                 </Link>
               </li>
             ))}
-          {result.result && (
+          {!result.result && (
             <p className={classes.noResult}>There is no novel matched</p>
           )}
         </ul>
@@ -167,8 +168,16 @@ export default function Search() {
               {genreList.map((g, i) => (
                 <li
                   key={i}
-                  onClick={setGenre.bind(null, g)}
-                  className={g === genre ? classes.active : undefined}
+                  onClick={() => {
+                    setQuery((prev) => {
+                      prev.set("genre", nameToUrl(g));
+                      return prev;
+                    });
+                    setGenre(g);
+                  }}
+                  className={
+                    g === urlToName(genre) ? classes.active : undefined
+                  }
                 >
                   {g}
                 </li>
