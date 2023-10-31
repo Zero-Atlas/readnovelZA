@@ -1,0 +1,21 @@
+.wrapper{
+  display: flex;
+  flex-direction: column;
+}
+.header, .footer{
+  background-color: #0F1128;
+  color: #eee;
+}
+
+.body{
+  min-height: 80vh;
+  background-color: #F5ECEC;
+  padding-bottom: 1rem;
+}
+.body *{
+  background-color: #fff;
+}
+
+.footer{
+  min-height: 10vh;
+}

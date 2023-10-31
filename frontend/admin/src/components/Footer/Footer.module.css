@@ -1,0 +1,10 @@
+.wp{
+  margin: 1.4rem auto;
+  max-width: max-content;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  line-height: 0.5;
+  gap: 4rem;
+}
