@@ -1,0 +1,28 @@
+.navbar {
+  margin: 1rem 1.6rem 0 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  overflow: hidden;
+  min-height: 80vh;
+  background-color: #f0dfc3;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
+}
+.navbar li {
+  background-color: #f0dfc3;
+  color: #0f1128;
+}
+
+.navLink {
+  padding: 1rem;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.active,
+.navLink:hover {
+  background-color: #0f1128;
+  color: #fff;
+}

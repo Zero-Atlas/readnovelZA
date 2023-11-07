@@ -4,6 +4,7 @@ import classes from "./RootLayout.module.css";
 import Footer from "../components/Footer/Footer";
 import { useContext, useEffect } from "react";
 import UserContex from "../context/userContext";
+import Navbar from "../components/Navbar/Navbar";
 
 export default function RootLayout() {
   const ct = useContext(UserContex);
@@ -16,6 +17,7 @@ export default function RootLayout() {
 
   //load user if already login
   useEffect(() => {
+    console.log(process.env.REACT_APP_API_KEY);
     fetch(`${process.env.REACT_APP_API_KEY}/auth/get-user-info`, {
       method: "GET",
       credentials: "include",
@@ -27,6 +29,9 @@ export default function RootLayout() {
       })
       .then((data) => {
         if (!data.message) ct.login(data);
+      })
+      .catch((err) => {
+        console.error(err);
       });
   }, [ct]);
   return (
@@ -35,7 +40,14 @@ export default function RootLayout() {
         <Header />
       </div>
       <main className={classes.body}>
-        <Outlet />
+        <div className={classes.wp}>
+          <div className={classes.sidebar}>
+            <Navbar />
+          </div>
+          <div className={classes.content}>
+            <Outlet />
+          </div>
+        </div>
       </main>
       <div className={classes.footer}>
         <Footer />

@@ -12,8 +12,18 @@
   background-color: #F5ECEC;
   padding-bottom: 1rem;
 }
-.body *{
-  background-color: #fff;
+.wp{
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+  max-width: 120rem;
+  margin: 0 auto;
+}
+.content{
+  overflow: hidden;
+  background-color: #ebe6e6;
+  margin-top: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
 }
 
 .footer{
