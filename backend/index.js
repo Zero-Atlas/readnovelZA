@@ -16,7 +16,9 @@ const authRouter = require("./routes/auth");
 const User = require("./model/user");
 
 //database init
-const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@movie-site.kpkcv1h.mongodb.net/${process.env.MONGO_DATABASE}`;
+const MONGODB_URI =
+  process.env.MONGODB_CONNECTION ||
+  `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@movie-site.kpkcv1h.mongodb.net/${process.env.MONGO_DATABASE}`;
 
 //multer init
 const store = new MongoDBStore({
